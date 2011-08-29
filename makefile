@@ -55,10 +55,10 @@ libs: $(TARGETS)
 abl: fwlib
 
 fwlib: 
-	$(ECHO) "Building" $(FWLIB) "support package source ->" \
+	@$(ECHO) "Building" $(FWLIB) "support package source ->" \
 	$(FWLIB_SRC_DIR)
 	@$(MAKE) TOOL=$(TOOL) -C $(FWLIB_SRC_DIR)
-	$(ECHO) "done"
+	@$(ECHO) "done"
 
 ########################################################################
 #
@@ -71,7 +71,7 @@ clean: $(TARGETS_CLN)
 abl_clean: fwlib_clean
 
 fwlib_clean: 
-	$(ECHO) "Cleaning" $(FWLIB) "support package ->" $(FWLIB_SRC_DIR)
+	@$(ECHO) "Cleaning" $(FWLIB) "support package ->" $(FWLIB_SRC_DIR)
 	@$(MAKE) TOOL=$(TOOL) -C $(FWLIB_SRC_DIR) clean -s
 
 
