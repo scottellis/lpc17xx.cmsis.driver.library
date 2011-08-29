@@ -22,27 +22,26 @@
 ########################################################################
 
 BUILD_ROOT =$(PROJ_ROOT)
-TOOLS_PATH =$(PROJ_ROOT)/makesection/tools
 
 FWLIB	   =Drivers
 LPC_SILENT =0
 
-ECHO		= $(TOOLS_PATH)/echo
+ECHO		= echo
 ifeq ($(LPC_SILENT), 1)
-	MAKE    = $(TOOLS_PATH)/make -s
+	MAKE    = make -s
 else	
-	MAKE    = $(TOOLS_PATH)/make
+	MAKE    = make
 endif
-MKDEPS		= $(TOOLS_PATH)/makedepend
+MKDEPS		= makedepend
 RANLIB		= ranlib
-MV			= $(TOOLS_PATH)/mv -f
-CP			= $(TOOLS_PATH)/cp
-CD			= $(TOOLS_PATH)/cd
-LS			= dir
-MKDIR		= $(TOOLS_PATH)/mkdir
-RM			= $(TOOLS_PATH)/rm -f
-RMREC		= $(TOOLS_PATH)/rm -f -r
-RMDIR		= $(TOOLS_PATH)/rmdir
+MV		= mv -f
+CP		= cp
+CD		= cd
+LS		= dir
+MKDIR		= mkdir
+RM		= rm -f
+RMREC		= rm -f -r
+RMDIR		= rmdir
 
 ASTYLE		= astyle --options=$(BUILD_ROOT)/makesection/tools/astyle.cfg 
 
@@ -68,7 +67,7 @@ else
 # In order to generate the final application code without DEBUG
 # All debug information will be remove (strip)
 
-ELFSTRIP 	=arm-none-eabi-objcopy -O elf32-littlearm --strip-all 
+ELFSTRIP 	= $(OBJCOPY) -O elf32-littlearm --strip-all 
 ELFTOBIN	= $(OBJCOPY) -I elf32-little -O binary --strip-debug --strip-unneeded 
 ELFTOREC 	= $(OBJCOPY) -O srec --strip-debug 
 ELFTOHEX	= $(OBJCOPY) -O ihex --strip-debug 
