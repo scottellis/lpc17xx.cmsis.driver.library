@@ -12,15 +12,13 @@
 #
 ########################################################################
 
-PROJ_ROOT			=C:/nxpdrv/LPC1700CMSIS
-CMCORE_TYPE			=CM3
-DEVICE				=LPC17xx
-MANUFACTURE			=NXP
-TOOL 				=gnu
-DEBUG_MODE			=1
+PROJ_ROOT		=${HOME}/cortex-m3/lpc17xx.cmsis.driver.library
+CMCORE_TYPE		=CM3
+DEVICE			=LPC17xx
+MANUFACTURE		=NXP
+TOOL 			=gnu
+DEBUG_MODE		=1
 
 
-GNU_INSTALL_ROOT	=C:/Program Files/CodeSourcery/Sourcery G++ Lite
-GNU_VERSION			=4.3.3
-IAR_INSTALL_ROOT	=C:/Program Files/IAR Systems/Embedded Workbench 5.0 Kickstart
-KEIL_INSTALL_ROOT	=C:/Keil
+GNU_INSTALL_ROOT	=${HOME}/x-tools/arm-bare_newlib_cortex_m3_nommu-eabi
+GNU_VERSION		=4.4.1
