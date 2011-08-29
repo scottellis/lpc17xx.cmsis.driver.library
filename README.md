@@ -3,16 +3,16 @@
 
 A shortcut for setting up new machines to do Gumstix Robovero development.
 
-This is the NXP sample driver library for LPC17xx boards downloaded from here
+This is the NXP sample driver library for LPC17xx Cortex-M3 boards downloaded
+from here
 
 [http://ics.nxp.com/support/documents/microcontrollers/zip/lpc17xx.cmsis.driver.library.zip]
 
-The modifications in this repo are for building the library using the crosstool-ng 
-tools on a Linux box as described in the Gumstix Robovero wiki here
+The modifications in this repository are for building the library using the 
+Crosstool-NG tools configured as described on the Gumstix Robovero Wiki
 
 [http://wiki.gumstix.org/index.php?title=RoboVero#crosstool-NG]
 
-j
 If you setup the Crosstool-NG for arm-bare_newlib_cortex-m3_nommu-eabi with 
 a destination of $(HOME)/x-tools and you added this to your PATH
 
