@@ -1,0 +1,492 @@
+
+RELEASE: LPC1700CMSIS_14June2011
+1./ Fix USB Audio bug:
+	Clean interrupt for SOF and ERROR in USB_IRQHandler()
+
+*******************************************************************************************************************************
+
+RELEASE: LPC1700CMSIS_07June2011
+1./ Fix I2S bugs, see:
+		- PARAM_I2S_DMA_DEPTH(n)
+		- PARAM_I2S_IRQ_LEVEL(n)
+		- PARAM_I2S_HALFPERIOD(n)
+		- PARAM_I2S_BITRATE(n)
+2./ Fix RTC bugs in:
+		- RTC_SetTime()
+		- RTC_SetAlarmTime()
+3./ Fix UART bug in:
+		- uart_set_divisors())
+4./ Remove some warnings
+5./ Update document
+6./ Change headers in drivers, examples, abstract files
+7./ Standadize Keil project files (abstract open only, default target: FLASH, remove breakpoints..)
+
+*******************************************************************************************************************************
+
+RELEASE: LPC1700CMSIS_31Mar2011
+1./ Fix bug in I2C driver (customer feedback)
+	Problem description: 
+		I2C_MasterTransferData() is not able to 
+		(1) Send, 
+		(2) doing a repeated Start and 
+		(3) starting to receive with one function call. 
+		Problem is that the repeated start is not generated, but a retransmission of the 
+		last word is startet. 
+	Solve: change 
+		I2Cx->I2CONCLR = I2C_I2CONCLR_SIC; 
+		I2Cx->I2CONSET = I2C_I2CONSET_STA; 
+	to 
+		I2Cx->I2CONSET = I2C_I2CONSET_STA; 
+		I2Cx->I2CONCLR = I2C_I2CONCLR_SIC; 
+		in function I2C_Start () 
+2./ Add function PWM_MultiMatchUpdate() to update match value for multi-channel at the same time
+3./ Update .chm file 	
+
+*******************************************************************************************************************************
+RELEASE: LPC1700CMSIS_10March2011
+
+1./Fix TIM bug (Customer feedback: Case 00001479): TIM clear pending functions will clear all interrupt pending instead of 
+clearing specific interrupt bit.
+	- fix functions:
+		+ TIM_ClearIntPending
+		+ TIM_ClearIntCapturePending
+
+
+*******************************************************************************************************************************
+
+RELEASE: LPC1700CMSIS_09March2011
+1./Fix CAN bug (Customer feedback: Case 00001354): older driver does not support setting AFLUT with different controller.
+	- modify functions:
+		+ CAN_SetupAFLUT()
+		+ CAN_LoadExplicitEntry()
+		+ CAN_LoadFullCANEntry()
+		+ CAN_LoadGroupEntry()		
+
+*******************************************************************************************************************************
+RELEASE: LPC1700CMSIS_26Jan2011
+1./ Fix bugs:
+	- debug_frmwrk.c > UARTPutDec32
+	- lpc17xx_i2c.c > I2C_SetClock
+
+*******************************************************************************************************************************
+
+RELEASE: LPC1700CMSIS_30Dec2010
+
+*** LPC1700CMSIS_30Dec2010 Lite***
+1./ Update to CMSIS v2.0
+	- update core_cm3.h/.c
+	- add core_cmFunc.h
+	- add core_cmInstr.h
+	- update .chm document 
+		+ update CMSIS Introduction (use v2.0 doc)
+		+ update CMSIS's version
+		+ re-organize CMSIS tab 
+		
+*** LPC1700CMSIS_30Dec2010 Full***
+1./ Update to CMSIS v2.0
+	- update core_cm3.h/.c
+	- add core_cmFunc.h
+	- add core_cmInstr.h
+	- add folder DSP_Lib at ..\Core
+	- add folder Document that includes CMSIS html files
+	- add CMSIS Document at ..\Core that describes all details about CMSIS v2.0
+	- modify .chm document (remove CMSIS Introduction link)
+	- re-organize CMSIS Tab
+			 
+*******************************************************************************************************************************
+
+RELEASE: LPC1700CMSIS_06Dec2010
+
+1./ Fix CAN issue
+	Issue: CAN code is running at a /4 frequency and the baud rate of 1Mbps cannot be hit exactly given a chip 
+	       frequency of 100MHz.
+	Fix: Change code to run the CAN at /2 instead.
+	Function: 
+		+ CAN_Init()
+		+ can_SetBaudrate()
+2./ Chang I2S set clock protocol. (old protocol generated bitrate value incorrect)
+	Function: I2S_FreqConfig() 
+	Modify I2S_Mclk example.
+			 
+*******************************************************************************************************************************
+
+RELEASE: LPC1700CMSIS_24Aug2010
+
+1./ Fix CAN bugs:
+	- CAN_SendMsg() function
+	- CAN_ReceiveMsg() function: add release buffer on the reception of REMOTE_FRAME
+2./ Updat .chm document file
+
+*******************************************************************************************************************************
+
+RELEASE: LPC1700CMSIS_16July2010
+
+1. Modify I2C driver.
+	- Add function "I2C_MonitorHandler()"
+2. Modify ADC > Burst example, add inject channel function
+3. Add new examples:
+	- CAN > CAN_LedControl
+	- Cortex-M3 > MPU
+	- DAC > WaveGenerate
+	- I2C > Monitor
+	- SPI > SDCard
+	- TIMER > FreqMeasure
+	- TIMER > Gen_Diff_Delay
+	- TIMER > Gen_Diff_Freqs
+	- SYSTICK > STCLK
+	- USBDEV > USBAudio
+	- USBDEV > USBCDC
+4. Modify abstract.txt files
+5. Rename author name into "NXP MCU SW Application Team"
+6. Rename rar file into "LPC1700 Peripheral Driver Library_date.rar"
+7. Update document files
+8. Fix bug in lpc17xx_ssp.h driver
+	- modify 'SSP_DMA_RX' and 'SSP_DMA_TX'
+	
+*******************************************************************************************************************************
+
+RELEASE: LPC1700CMSIS_18June2010
+
+1./ Modify/update drivers:
+	- ADC:
+		+ modify function "ADC_GlobalGetData()"
+	- CAN:
+		+ add function "CAN_SetCommand()"
+		+ modify function: "CAN_ModeConfig()"
+	- PWR:
+		+ modify functions:
+			. CLKPWR_DeepSleep()
+			. CLKPWR_PowerDown()
+	- EXTI:
+		+ modify function: EXTI_Init()
+	- DAC: 
+		+ modify macro "DAC_CCNT_VALUE" value
+	- GPIO:
+		+ add functions: 
+			. GPIO_IntCmd() 
+			. GPIO_GetIntStatus()
+			. GPIO_ClearInt()
+			. FIO_IntCmd()
+			. FIO_GetIntStatus()
+			. FIO_ClearInt()
+	- I2S:
+		+ rename macros: 
+			. "I2S_CLKSEL_0" -> "I2S_CLKSEL_FRDCLK"
+			. "I2S_CLKSEL_1" -> "I2S_CLKSEL_MCLK"
+		+ modify macros PARAM_I2S_BITRATE(n)
+		+ add functions:
+			. I2S_GetIRQStatus()
+			. I2S_GetIRQDepth()
+	- RTC:
+		+ modify functions:
+			. RTC_ClearIntPending()
+			. RTC_CalibConfig()
+	- SSP:
+		+ add functions: SSP_GetRawIntStatusReg()
+	- TIMER:
+		+ modify function: TIM_Init()
+	- UART:
+		+ add functions:
+			. UART_GetIntId()
+			. UART_ABClearIntPending()			
+2./ Add comment to embed example files in .chm document (generate by doxygen)
+3./ Add macro "_DBGFWK" in libcfg files to disable/enable debug framework library
+4./ Add new examples: (include both Keil and IAR project)
+	- ADC:
+		+ Burst
+		+ HardwareTrigger
+	- CAN:
+		+ CAN_self_test
+	- Cortex-M3: 
+		+ Privilege_mode
+	- DAC:
+		+ SineWave
+	- GPDMA:
+		+ GPDMA_Sleep
+	- I2S: 
+		+ I2S_MCLK
+	- NVIC:
+		+ Priority
+		+ VecTable_Relocation
+	- PWR:
+		+ NMI_PowerDown
+		+ RTC_DeepPWD
+		+ WDT_DeepSleep
+	- RTC:
+		+ Calibration
+	- UART:
+		+ IrDA (Transmit + Receive)
+		+ HWFlowControl	
+5./ Modify examples:
+6./ Update AN10863_3 (LPC17xx Example Description) and LPC1700CMSIS Manual.chm
+7./ Check errata sheet (Errata.lpc1768 rev.02 - 16 March 2010):
+	- Errata 3.3 - User must disable and disconnect the main PLL before entering Deep Sleep and Power-down modes
+	(apply in NMI_PowerDown and WDT_DeepSleep examples)
+	- Errata 3.4: PCLKSELx.1: Peripheral Clock Selection Registers must be set before enabling and connecting PPL0
+	(apply in system_LPC17xx.c file)
+	- Errata 3.5: MCPWM.1: Input pin (MCI0-2) on the MCPWM peripheral are not functional 
+	(removed MCI0-2 out of MCPWM example)
+8./ Change using "#define DEBUG" instead of "#define DEBUG 	1" in some lpc17xx_libcfg.h files
+9./ Remove instructions that use chip registers in application code, replaced by driver functions
+	- EMAC/uIP
+	- GIPO/GPIO_Interrupt
+	- I2S/I2S_IRQ
+	- I2S/I2S_two_kit
+	- LCD/NOKIA6610
+	- PWR/NMI_PowerDown
+	- QEI/QEI_Velo
+	- SPI/sc16is750_int
+	- SSP/sc16is750_int
+	- SSP/Slave
+	- UART/Autobaud
+	- UART/DMA
+	- UART/Interrupt
+	- UART/RS485_Slave
+	- UART/RS485_Master
+	- UART/FullModem
+10./ Re-name some Keil projects files in order to keep the naming consistent across projects
+11./ Solve error " The project contains the unknow tool 'Coder'" in each IAR projects
+12./ Fix some bugs in some project files
+
+*******************************************************************************************************************************
+
+RELEASE: LPC1700CMSIS_21May2010
+
+1./ core_cm3.h: Modify SysTick_Type registers name in core_cm3.h file (for compatible with LPC17xx UM Rev.01 - 4 January 2010)
+2./ system_LPC17xx.c: Modify RTC_CLK value (32768Hz) (for compatible with MCB1700 and IAR-LPC1768KS board datasheet)
+3./ system_LPC17xx.c > SystemInit(): Add some code lines at the end to set vector table offset value when intialize system
+4./ header driver files: re-arrange definitions/structure/functions in header files with this order:
+	- include files
+	- Public macros
+	- Private macros
+		+ Bit definitions
+		+ check parameter definitions
+	- Public Types
+		+ enumeration
+		+ structure
+	- Public Functions
+5./ Header driver files:
+	- Remove some unused defintion
+	- Add new functions 
+	- Remove functions that handle interrupt routine and setup call-back function
+6./ Header & Source driver files: Remove functions that handle interrupt service routine & setup call-back functions
+	- CAN: 
+		+ CAN_SetupCBS()
+		+ CAN_IntHandler()
+	- EMAC:
+		+ EMAC_StandardIRQHandler()
+		+ EMAC_SetupIntCBS()
+	- GPDMA:
+		+ GPDMA_IntHandler()
+	- I2C:
+		+ I2C0_StdIntHandler()
+		+ I2C1_StdIntHandler()
+		+ I2C1_StdIntHandler()
+	- I2S:
+		+ I2S_IntHandler()
+	- SPI:
+		+ SPI_StdIntHandler()
+	- SSP:
+		+ SSP0_StdIntHandler()
+		+ SSP1_StdIntHandler()
+	- UART:
+		+ UART0_StdIntHandler()
+		+ UART1_StdIntHandler()
+		+ UART2_StdIntHandler()
+		+ UART3_StdIntHandler()
+		+ UART_SetupCbs()
+7./ Source files:
+	- Change some function parameter input
+	- Remove some variable used for debugger
+	- Remove functions/variables that used to handle interrupt routine and setup call-back function
+8./ Change some functions into static mode:
+	- CAN:
+		+ can_SetBaudrate()
+	- EMAC:
+		+ setEmacAddr()
+		+ emac_CRCCalc()
+	- GPIO:
+		+ GPIO_GetPointer()
+		+ FIO_HalfWordGetPointer()
+		+ FIO_ByteGetPointer()
+	- I2C:
+		+ I2C_getNum()
+		+ I2C_SetClock()
+	- I2S:
+		+ i2s_GetWordWidth()
+		+ i2s_GetChannel()
+	- PINSEL:
+		+ set_PinFunc()
+		+ set_ResistorMode()
+		+ set_OpenDrainMode()	
+9./ Change to define board MCB_LPC1768/IAR_LPC_1768 into #ifdef/#elif method
+10./ Update abstract.txt file in each example into new format
+11./ Add some functions in example to handle interrupt routine
+12./ Add new example:
+	- Cortex-M3: Bit-banding
+	- GPDMA: Flash_2_Ram_Test
+	- PWR: EXTI_Sleep
+	- SysTick: 10ms_base
+	- TIMER: Polling_Match, PWMSignal
+13./ Rename some example
+	- DAC: DAC->Speaker
+	- GPDMA: Mem_2_Mem_Test -> Ram_2_Ram_Test
+	- USBDEV: USBMem -> USBMassStorage
+14./ Remove unused examples:
+	- RIT:
+		+ Polling
+		+ Simple
+	- TIMER
+		+ Delay
+15./ startup file for GNU: Add some assembly code line to clear .BSS section before enter to main function (in RAM mode)
+16./ ldscript_ram_gnu.ld: Define two variable: 
+		+ __bss_start__
+		+ __bss_end__
+	at the first and the end of .bss section
+17./ makefile.ex: add "cleanall" before build ram/rom 
+ 	So examples can be built continuously without cleaning
+18./ Remove FreeRTOS example
+19./ Add *.ewd in each IAR example project to configure debugger.
+20./ Modify documents:
+	+ LPC1000 Software Development Toolchain
+	+ LPC17xx Example Description
+	+ index.chm (will be rename to "LPC1700CMSIS Manual")
+21./ makeconfig: remove unused variable path "ADS_INSTALL_ROOT"
+22./ Remove UartDev, SpiDev and EthDev example that delivered by CMSIS 
+23./ Modify comments to re-arrange generated document	
+24./ Fix bug in UART example (run with UART_PORT 1)
+	
+*******************************************************************************************************************************
+
+RELEASE: LPC1700CMSIS_07Apr2010
+
+1./ Change all author name into "MCU SW Team"
+2./ Add KSZ8721BL PHY definition in emac.h (support for Ethernet Physical Layer Transceiver on IAR eval board)
+3./ Remove define PARAM_I2S_DATA(data) in lpc17xx_i2s.h file
+4./ Fix a bug in lpc17xx_i2s.h
+	original: #define PARAM_I2S_WS_SEL(n)		((n==I2S_MASTER_MODE)||(n=I2S_SLAVE_MODE))
+	fixed:    #define PARAM_I2S_WS_SEL(n)		((n==I2S_MASTER_MODE)||(n==I2S_SLAVE_MODE))
+5./ Change lpc17xx_libcfg_default.h : use "#define _xxx" instead of "#define _xxx  1"
+6./ Change all lpc17xx_libcfg.h in each example: use "#define _xxx" instead of "#define _xxx  1"
+    Remove some unused define.
+7./ Change lpc17xx_can.c
+	- change function: CAN_SetBaudRate (can compute divisor that compliant with all standard CAN baudrate)
+	- remove " const uint32_t CAN_BIT_TIME[] " 
+	- fix bugs in "CAN_SendMsg" 
+	original: 	CANx->TFI1 &= ~0x000F000;
+	            CANx->TFI2 &= ~0x000F000;
+	            CANx->TFI3 &= ~0x000F000;
+	fixed:    	CANx->TFI1 &= ~0x000F0000;
+				CANx->TFI2 &= ~0x000F0000;
+				CANx->TFI3 &= ~0x000F0000;
+8./ Update lpx17xx_emac.c (that can run on KSZ8721BL PHY on IAR eval board)
+9./ Remove some unused "break" instruction in:
+	- lpc17xx_gpdma.c
+	- lpc17xx_i2c.c
+	- lpc17xx_i2s.c
+	- lpc17xx_pwm.c
+	- lpc17xx_rtc.c
+	- usbcore.c
+10./ Remove CHECK_PARAM(PARAM_I2S_DATA (BufferData)) in I2S_Send( ) function.
+11./ lpc17xx_pwm.c: move variable declaration to the head of function (to compatible with Keil platform)
+12./ Remove some unused function/variable in lpc17xx_timer.c
+13./ Add Keil project in each example
+14./ Add one more group "Readme" in IAR projects that include abstract.txt files
+15./ Update abstract.txt files some configure instructions to run example on IAR board.
+16./ Remove Port_LCD example on GPIO folder.
+17./ Add more folder "LCD" that include two example NOKIA6610_LCD that test LCD on MCB board
+and QVGA_TFT_LCD that test LCD on IAR board
+18./ Fix bugs about incorrect including file on target "LPC1700 Flash" in Keil_RealView_MDK template project
+19./ Modify "DiskImg.c" in USBMem example to display "LPC17xx" drive instead "LPC2300" name.
+20./ Modify some main functions that allow testing on IAR eval board:
+	- ADC\DMA\adc_dma_test.c
+	- ADC\INTERRUPT\adc_interrupt_test.c
+	- ADC_Polling\adc_polling_test.c
+	- EMAC\Easy_Web\Adc.c
+	  EMAC\Easy_Web\easy_web.c
+	  EMAC\Easy_Web\EMAC.h
+	  EMAC\Easy_Web\tcpip.c
+	- EMAC\EmacRaw\emactest.c
+	- EMAC\uIP\lpc17xx_port\emac.c
+	  EMAC\uIP\lpc17xx_port\emac.h
+	  EMAC\uIP\lpc17xx_port\main.c
+	- GPIO\EINT_PowerDown\eint_powerdown_test.c
+	- GPIO\GPIO_Interrupt\gpio_int.c
+	- GPIO\LedBlinky\LedBlinky.c
+	- RIT\Interrupt\rit_interrupt.c
+	- RIT\Polling\rit_polling.c
+	- RIT\Simple\rit_simple.c
+	- TIMER\Delay\timer_delay_test.c
+	- TIMER\Interrupt_Match\timer_interrupt_test.c
+	- UART\UART1_FullModem\uart_fullmodem_test.c
+	- WDT\INTERRUPT\wdt_interrupt_test.c
+	- WDT\RESET\wdt_reset_test.c
+		
+
+*******************************************************************************************************************************
+
+RELEASE: LPC1700CMSIS_09Feb2010
+
+1./ Update header file: LPC17xx.h:
+	 + Add two more register: CANSLEEPCLR and CANWAKEFLAGS in LPC_SC_TypeDef structure
+	 + Fix the wrong align of USB OTG I2C registers
+2./ Update IAR and Keil startup file:
+	 + Add two more interrupt sources of CAN and USB Activity
+3./ Remove folder .\Core\CM3\Example
+
+*******************************************************************************************************************************
+
+RELEASE: LPC1700CMSIS_25Jan2010
+
+1./ Standarlize AN10862_2 to AN10862_3 (LPC1100  Software Development Toolchain)
+2./ Update index.chm
+3./ Add Eclipse_GNU template in \Example\Project_Template folder
+
+*******************************************************************************************************************************
+
+RELEASE: LPC1700CMSIS_13Jan2010
+
+1./ Fix more fault in coding style to generate properly document
+2./ Remove part of the Flash configuration in the CMSIS Library 
+    FLASHCFG[11..0]: Reserved (system_LPC17xx.c)
+
+*******************************************************************************************************************************
+
+RELEASE: LPC1700CMSIS_12Jan2010
+
+1./ Modify "system_LPC17xx.c" to suit the PCLKSELx.1 bug (see the errata for LPC1766)
+2./ Fix some fault in coding style to generate properly document
+3./ Resolve inconsistent line ending in some remain files 
+
+*******************************************************************************************************************************
+
+RELEASE: LPC1700CMSIS_21Dec2009
+
+1./ Update CMSIS ver1.2 to ver1.3
+	. Change Core directory
+	. Change startup file (from startup_LPC17xx.c into startup_LPC17xx.s)
+	. Change LPC17xx header file
+	. Change LPC17xx system file
+	. Change linker file (both for ROM and RAM)
+	. Change makefile
+2./ In "makeconfig" file, add more argument "MANUFACTURE"
+3./ Verify on Consistency Check report on MCB1700 board
+4./ Modify directory for global file in IAR and Keil project
+5./ Add "Pa050" in the 'Suppress these diagnostics' in the Diagnostics tab of the C/C++ Compiler options of the IAR project
+6./ Update AN10862, AN10863, AN10867.pdf and index.chm 
+7./ Remove flags:
+	-ffunction-sections 
+	-fdata-sections
+	-Wl,--gc-sections 
+8./ Remove AN10867 and add AN10864 (importing FreeRTOS to LPC17xx CMSIS project)) to index.chm
+9./Create new IAR examples in 
+	- CAN/CAN_AFLUT_dynamic
+	- I2S/I2S_test_4_wire
+	- RIT/Interrupt
+	- RIT/Polling
+	- TIMER/Capture
+10./Update all Keil projects to new Keil version uVision 4
+11./Resolve missing NVIC entries in startup and header files 
+12./Resolve inconsistent line ending
+
+		

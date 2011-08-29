@@ -1,0 +1,109 @@
+/**********************************************************************
+* $Id$		abstract.txt 			
+*//**
+* @file		abstract.txt 
+* @brief	Example description file
+* @version	2.0
+* @date		
+* @author	NXP MCU SW Application Team
+*
+* Copyright(C) 2010, NXP Semiconductor
+* All rights reserved.
+*
+***********************************************************************
+* Software that is described herein is for illustrative purposes only
+* which provides customers with programming information regarding the
+* products. This software is supplied "AS IS" without any warranties.
+* NXP Semiconductors assumes no responsibility or liability for the
+* use of the software, conveys no license or title under any patent,
+* copyright, or mask work right to the product. NXP Semiconductors
+* reserves the right to make changes in the software without
+* notification. NXP Semiconductors also make no representation or
+* warranty that such application will be suitable for the specified
+* use without further testing or modification.
+**********************************************************************/
+  
+@Example description:
+	Purpose:
+		This example describes how uses I2C as master device to transfer data 
+		from/to I2C slave device
+	Process:
+		 I2C0 is configured as slave and I2C2 is configured as master. Both I2C using polling mode.
+		 I2C Clock Rate is set at 100K.
+		 UART0 is configure for display transmit process.
+		 		
+		After reset software will run the following steps: 		
+		- First, the master transmit to slave a number of data bytes
+		- Then, the master receive a number of data bytes from slave.
+		- Finally, the master send two bytes to slave, send repeat start immediately 
+		and receive from slave a number of data byte.
+		
+@Directory contents:
+	\EWARM: includes EWARM (IAR) project and configuration files
+	\Keil:	includes RVMDK (Keil)project and configuration files 
+	 
+	lpc17xx_libcfg.h: Library configuration file - include needed driver library for this example 
+	makefile: Example's makefile (to build with GNU toolchain)
+	i2c_master_slave_int_test.c: Main program
+
+@How to run:
+	Hardware configuration:		
+		This example was tested on:
+			Keil MCB1700 with LPC1768 vers.1
+				These jumpers must be configured as following:
+				- VDDIO: ON
+				- VDDREGS: ON 
+				- VBUS: ON
+				- Remain jumpers: OFF
+			IAR LPC1768 KickStart vers.A
+				These jumpers must be configured as following:
+				- PWR_SEL: depend on power source
+				- DBG_EN : ON
+				- Remain jumpers: OFF
+				
+		I2C connection:
+			For I2C0:
+				- SDA -> P0.27
+				- SCL -> P0.28
+			For I2C2:
+				- SDA -> P0.10
+				- SCL -> P0.11
+		SDA pin of I2C master connects to SDA pin of I2C slave peripheral
+		SCL pin of I2C master connects to SCL pin of I2C slave peripheral
+				
+	Serial display configuration:(e.g: TeraTerm, Hyperterminal, Flash Magic...) 
+		– 115200bps 
+		– 8 data bit 
+		– No parity 
+		– 1 stop bit 
+		– No flow control 
+	
+	Running mode:
+		This example can run on RAM/ROM mode.
+					
+		Note: If want to burn hex file to board by using Flash Magic, these jumpers need
+		to be connected:
+			- MCB1700 with LPC1768 ver.1:
+				+ RST: ON
+				+ ISP: ON
+			- IAR LPC1768 KickStart vers.A:
+				+ RST_E: ON
+				+ ISP_E: ON
+		
+		(Please reference "LPC1000 Software Development Toolchain" - chapter 4 "Creating and working with
+		LPC1000CMSIS project" for more information)
+	
+	Step to run:
+		- Step 1: Choose I2C peripheral for master and slave by setting 'USEDI2CDEV_M' and 'USEDI2CDEV_S'
+		- Step 2: Build example.
+		- Step 3: Burn hex file into board (if run on ROM mode)
+		- Step 4: Connect UART0 on this board to COM port on your computer
+		- Step 5: Configure hardware and serial display as above instruction 
+		- Step 6: Run example, and see the result in UART display tool.
+		
+		(Pls see "LPC17xx Example Description" document - chapter "Examples > I2C > Master_Slave_Interrupt"
+		for more details)
+		
+@Tip:
+	- Open \EWARM\*.eww project file to run example on IAR
+	- Open \RVMDK\*.uvproj project file to run example on Keil

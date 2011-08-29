@@ -1,0 +1,126 @@
+/**********************************************************************
+* $Id$		abstract.txt 			
+*//**
+* @file		abstract.txt 
+* @brief	Example description file
+* @version	2.0
+* @date		
+* @author	NXP MCU SW Application Team
+*
+* Copyright(C) 2010, NXP Semiconductor
+* All rights reserved.
+*
+***********************************************************************
+* Software that is described herein is for illustrative purposes only
+* which provides customers with programming information regarding the
+* products. This software is supplied "AS IS" without any warranties.
+* NXP Semiconductors assumes no responsibility or liability for the
+* use of the software, conveys no license or title under any patent,
+* copyright, or mask work right to the product. NXP Semiconductors
+* reserves the right to make changes in the software without
+* notification. NXP Semiconductors also make no representation or
+* warranty that such application will be suitable for the specified
+* use without further testing or modification.
+**********************************************************************/
+  
+@Example description:
+	Purpose:
+		This example describes how to use I2S as slave device to communicate with I2S 
+		master device in polling mode
+		Note that: this example will run combine with slave example at folder \slave.
+		(Pls see "Step to run" part in this file for more information)
+	Process:
+		This example uses I2C as master device to transfer data from/to I2C slave device
+		- First, the slave receive from master a number of data bytes
+		- Then, the slave transmit a number of data bytes to master.
+		- Finally, the master send two bytes to slave, send repeat start immediately 
+		and receive from slave a number of data byte.
+		- Using in polling mode.
+		
+		UART0 is configure for display message and control I2C.		 		
+		After reset UART0 will send the welcome message and guide user how to control 
+		the I2C transmition and reception via UART
+		
+@Directory contents:
+	\EWARM: includes EWARM (IAR) project and configuration files
+	\Keil:	includes RVMDK (Keil)project and configuration files 
+	
+	lpc17xx_libcfg.h: Library configuration file - include needed driver library for this example 
+	makefile: Example's makefile (to build with GNU toolchain)
+	slave.c: Main program
+
+@How to run:
+	Hardware configuration:		
+		This example was tested on:
+			Keil MCB1700 with LPC1768 vers.1
+				These jumpers must be configured as following:
+				- VDDIO: ON
+				- VDDREGS: ON 
+				- VBUS: ON
+				- Remain jumpers: OFF
+			IAR LPC1768 KickStart vers.A
+				These jumpers must be configured as following:
+				- PWR_SEL: depend on power source
+				- DBG_EN : ON
+				- Remain jumpers: OFF
+			
+			
+		I2C connection:
+			If using I2C0: 
+				- SDA -> P0.27
+				- SCL -> P0.28
+			If using I2C2
+				- SDA -> P0.10
+				- SCL -> P0.11
+			SDA pin on master connects with SDA pin on slave
+			SCL pin on master connects with SCL pin on slave
+				
+	Serial display configuration:(e.g: TeraTerm, Hyperterminal, Flash Magic...) 
+		– 115200bps 
+		– 8 data bit 
+		– No parity 
+		– 1 stop bit 
+		– No flow control 
+	
+	Running mode:
+		This example can run on RAM/ROM mode.
+					
+		Note: If want to burn hex file to board by using Flash Magic, these jumpers need
+		to be connected:
+			- MCB1700 with LPC1768 ver.1:
+				+ RST: ON
+				+ ISP: ON
+			- IAR LPC1768 KickStart vers.A:
+				+ RST_E: ON
+				+ ISP_E: ON
+		
+		(Please reference "LPC1000 Software Development Toolchain" - chapter 4 "Creating and working with
+		LPC1000CMSIS project" for more information)
+	
+	Step to run:
+		- Step 1: Choose what I2C peripheral use in this case by setting "USEDI2CDEV_M"
+			+ If using I2C0, setting
+				#define USEDI2CDEV_M	0
+			+ If using I2C2, setting
+				#define USEDI2CDEV_M	2
+		- Step 2: Build example.				
+		- Step 3: Burn hex file into slave board (if run on ROM mode)
+		- Step 4: Choose correct working board and I2C peripheral in \master\master.c file
+				  Build and burn this example into master board (if run on ROM mode)		
+		- Step 5: Connect UART0 on master and slave boards to COM ports on your computer
+		- Step 6: Configure hardware and serial display as above instruction 
+		- Step 7: Run example
+					+ Hit reset button on slave board
+					+ At slave side: Press '1' to start
+					+ Hit reset button on master board
+					+ At master side: 
+						- Press '1' to transmit
+						- Press '2' to receive
+						- Press '3' to transmit, then repeat start and receive
+		
+		(Pls see "LPC17xx Example Description" document - chapter "Examples > I2C > slave"
+		for more details)
+		
+@Tip:
+	- Open \EWARM\*.eww project file to run example on IAR
+	- Open \RVMDK\*.uvproj project file to run example on Keil

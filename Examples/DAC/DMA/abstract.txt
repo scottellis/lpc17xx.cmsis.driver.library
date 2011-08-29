@@ -1,0 +1,92 @@
+/**********************************************************************
+* $Id$		abstract.txt 			
+*//**
+* @file		abstract.txt 
+* @brief	Example description file
+* @version	2.0
+* @date		
+* @author	NXP MCU SW Application Team
+*
+* Copyright(C) 2010, NXP Semiconductor
+* All rights reserved.
+*
+***********************************************************************
+* Software that is described herein is for illustrative purposes only
+* which provides customers with programming information regarding the
+* products. This software is supplied "AS IS" without any warranties.
+* NXP Semiconductors assumes no responsibility or liability for the
+* use of the software, conveys no license or title under any patent,
+* copyright, or mask work right to the product. NXP Semiconductors
+* reserves the right to make changes in the software without
+* notification. NXP Semiconductors also make no representation or
+* warranty that such application will be suitable for the specified
+* use without further testing or modification.
+**********************************************************************/
+  
+@Example description:
+	Purpose:
+		This example describes how to use DMA to transfer data to DAC peripheral
+	Process:
+		DAC will be initialized with maximum current is 700uA. This allows a maximum update rate of 1Mhz
+		Formula for ouput voltage on AOUT is: 
+			AOUT = VALUE x ((Vrefp - Vrefn)/1024)+Vrefn
+		in which:
+		- Vrefp: tied to VDD(3.3V)
+		- Vrefn: tied to Vss
+		
+		GPDMA channel 0 is configured in this example.
+		GPDMA channel 0 will tranfer "dac_value" to DAC peripheral. DAC updated values have range 
+		from 0 to 0x3FF. So AOUT ouput voltage will change from: Vss to VDD.
+		
+		Observe AOUT(P0.26) signal by oscilloscope.
+					
+@Directory contents:
+	\EWARM: includes EWARM (IAR) project and configuration files
+	\Keil:	includes RVMDK (Keil)project and configuration files 
+	 
+	lpc17xx_libcfg.h: Library configuration file - include needed driver library for this example 
+	makefile: Example's makefile (to build with GNU toolchain)
+	dac_dma.c: Main program
+
+@How to run:
+	Hardware configuration:		
+		This example was tested on:
+			Keil MCB1700 with LPC1768 vers.1
+				These jumpers must be configured as following:
+				- VDDIO: ON
+				- VDDREGS: ON 
+				- VBUS: ON
+				- Remain jumpers: OFF
+			IAR LPC1768 KickStart vers.A
+				These jumpers must be configured as following:
+				- PWR_SEL: depend on power source
+				- DBG_EN : ON
+				- Remain jumpers: OFF
+				
+	
+	Running mode:
+		This example can run on RAM/ROM mode.
+					
+		Note: If want to burn hex file to board by using Flash Magic, these jumpers need
+		to be connected:
+			- MCB1700 with LPC1768 ver.1:
+				+ RST: ON
+				+ ISP: ON
+			- IAR LPC1768 KickStart vers.A:
+				+ RST_E: ON
+				+ ISP_E: ON
+		
+		(Please reference "LPC1000 Software Development Toolchain" - chapter 4 "Creating and working with
+		LPC1000CMSIS project" for more information)
+	
+	Step to run:
+		- Step 1: Build example.
+		- Step 2: Burn hex file into board (if run on ROM mode)
+		- Step 3: Configure hardware as above instruction 
+		- Step 4: Run example and observe AOUT(P0.26) signal by oscilloscope
+		
+		(Pls see "LPC17xx Example Description" document - chapter "Examples > DAC > DMA"
+		for more details)
+@Tip:
+	- Open \EWARM\*.eww project file to run example on IAR
+	- Open \RVMDK\*.uvproj project file to run example on Keil

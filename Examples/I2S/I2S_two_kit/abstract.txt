@@ -1,0 +1,118 @@
+/**********************************************************************
+* $Id$		abstract.txt 			
+*//**
+* @file		abstract.txt 
+* @brief	Example description file
+* @version	2.0
+* @date		
+* @author	NXP MCU SW Application Team
+*
+* Copyright(C) 2010, NXP Semiconductor
+* All rights reserved.
+*
+***********************************************************************
+* Software that is described herein is for illustrative purposes only
+* which provides customers with programming information regarding the
+* products. This software is supplied "AS IS" without any warranties.
+* NXP Semiconductors assumes no responsibility or liability for the
+* use of the software, conveys no license or title under any patent,
+* copyright, or mask work right to the product. NXP Semiconductors
+* reserves the right to make changes in the software without
+* notification. NXP Semiconductors also make no representation or
+* warranty that such application will be suitable for the specified
+* use without further testing or modification.
+**********************************************************************/
+  
+@Example description:
+	Purpose:
+		This example describes how to configure I2S peripheral to communication
+		between two board.
+	Process:
+		I2S setup:
+			- wordwidth: 16 bits
+			- stereo mode
+			- master mode for TX and slave mode for RX
+			- ws_haftword = 31
+			- frequency = 44.1Khz (maximum is 96kHz)
+		This setup can be changed to test with other config.
+		
+		I2S peripheral on transmit board will send infinite data to I2S peripheral on receive board.
+		Data will be increase after each transmittion.
+		
+		tx_depth_irq = rx_depth_irq = 4.
+		So whenever FIFO is haft full, it will create IRQ request, I2S interrupt service routine 
+		"I2S_IRQHandler()" will be called to send/receive data.
+		
+		Open serial terminal to observe I2S transfer process.
+		
+		Pls note that because I2S is the protocol for audio data transfer, so sometime it has dummy data
+		while FIFO transmit is empty. These data are not importance and they can be ignored when verify. 
+			
+@Directory contents:
+	\EWARM: includes EWARM (IAR) project and configuration files
+	\Keil:	includes RVMDK (Keil)project and configuration files 
+	
+	lpc17xx_libcfg.h: Library configuration file - include needed driver library for this example 
+	makefile: Example's makefile (to build with GNU toolchain)
+	i2s_two_kit.c: Main program
+
+@How to run:
+	Hardware configuration:		
+		This example was tested on:
+			Keil MCB1700 with LPC1768 vers.1
+				These jumpers must be configured as following:
+				- VDDIO: ON
+				- VDDREGS: ON 
+				- VBUS: ON
+				- Remain jumpers: OFF
+			IAR LPC1768 KickStart vers.A
+				These jumpers must be configured as following:
+				- PWR_SEL: depend on power source
+				- DBG_EN : ON
+				- Remain jumpers: OFF
+				
+		I2S connection:
+		- P0.4(J.116)-I2SRX_CLK on first board connects to P0.7(J.112)-I2STX_CLK on second board.
+		- P0.5(J.115)-I2SRX_WS  on first board connects to P0.8(J.111)-I2STX_WS  on second board.
+		- P0.6(J.113)-I2SRX_SDA on first board connects to p0.9(J.109)-I2STX_SDA on second board.
+		Common ground must be connected together between two board.
+				
+	Serial display configuration:(e.g: , TeraTerm, Hyperterminal, Flash Magic...) 
+		– 115200bps 
+		– 8 data bit 
+		– No parity 
+		– 1 stop bit 
+		– No flow control 
+	
+	Running mode:
+		This example can run on RAM/ROM mode.
+					
+		Note: If want to burn hex file to board by using Flash Magic, these jumpers need
+		to be connected:
+			- MCB1700 with LPC1768 ver.1:
+				+ RST: ON
+				+ ISP: ON
+			- IAR LPC1768 KickStart vers.A:
+				+ RST_E: ON
+				+ ISP_E: ON
+		
+		(Please reference "LPC1000 Software Development Toolchain" - chapter 4 "Creating and working with
+		LPC1000CMSIS project" for more information)
+	
+	Step to run:
+		- Step 1: Setting: "I2S_TRANSMIT = 1", build example and burn hex file into transmit board.
+		- Step 2: Setting: "I2S_TRANSMIT = 0", build example and burn hex file into receive board.
+		Note that receive program also can run on RAM mode with debugger if you want.
+		- Step 3: Connect UART0 on receive board to COM port on your computer
+		- Step 4: Configure hardware and serial display as above instruction 
+		- Step 5: Run example and observe data on serial display
+					+ Run receive board first
+						- Press '1' to start I2S operation
+					+ Then, hit reset button on transmit board
+					
+		(Pls see "LPC17xx Example Description" document - chapter "Examples > I2S > I2S_two_kit"
+		for more details)
+		
+@Tip:
+	- Open \EWARM\*.eww project file to run example on IAR
+	- Open \RVMDK\*.uvproj project file to run example on Keil		

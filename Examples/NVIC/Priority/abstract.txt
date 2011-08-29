@@ -1,0 +1,104 @@
+/**********************************************************************
+* $Id$		abstract.txt 			
+*//**
+* @file		abstract.txt 
+* @brief	Example description file
+* @version	2.0
+* @date		
+* @author	NXP MCU SW Application Team
+*
+* Copyright(C) 2010, NXP Semiconductor
+* All rights reserved.
+*
+***********************************************************************
+* Software that is described herein is for illustrative purposes only
+* which provides customers with programming information regarding the
+* products. This software is supplied "AS IS" without any warranties.
+* NXP Semiconductors assumes no responsibility or liability for the
+* use of the software, conveys no license or title under any patent,
+* copyright, or mask work right to the product. NXP Semiconductors
+* reserves the right to make changes in the software without
+* notification. NXP Semiconductors also make no representation or
+* warranty that such application will be suitable for the specified
+* use without further testing or modification.
+**********************************************************************/
+  
+@Example description:
+	Purpose:
+		This example describes how to configure NVIC priority grouping for testing 
+		tail-chaining/Late-arriving interrupt mode.
+	Process:
+		This example uses 2 external interrupt 0 and 3 as IRQ channels.
+		Setting "INT_MODE" macro to chose interrupt mode test.
+			- INT_MODE = 0: Tail-chainning interrupt testing
+			EXT0 is assigned group-priority = 0, sub-priority = 2
+			EXT3 is assigned group-priority = 0, sub-priority = 1
+			Two IRQ channels has same group.So, new ISR can not pre-empt previous interrupt 
+			when it's executing even if new ISR has higher priority than curren ISR
+			- INT_MODE = 1: Late-arriving interrupt testing.
+			EXT0 is assigned group-priority = 0, sub-priority = 0
+			EXT3 is assigned group-priority = 1, sub-priority = 0
+			EXT0 has higher group-priority than EXT3, so EXT0 can pre-empt EXT3 when it's executing
+		
+		In this example, EXT0 occurs when pressing button INT0. 
+		EXT0 interrupt will blink LED P1.29 10 times.
+		EXT3 occurs when turning ADC potentiometer until pull-down GPIO P0.25 pin (ADC0.2). 
+		EXT3 interrupt will blink LED P1.28 10 times
+			
+					
+@Directory contents:
+	\EWARM: includes EWARM (IAR) project and configuration files
+	\Keil:	includes RVMDK (Keil)project and configuration files 
+	
+	lpc17xx_libcfg.h: Library configuration file - include needed driver library for this example 
+	makefile: Example's makefile (to build with GNU toolchain)
+	nvic_priority.c: Main program
+
+@How to run:
+	Hardware configuration:		
+		This example was tested only on:
+			Keil MCB1700 with LPC1768 vers.1
+				These jumpers must be configured as following:
+				- VDDIO: ON
+				- VDDREGS: ON 
+				- VBUS: ON
+				- INT0: ON
+				- Remain jumpers: OFF
+	
+	Running mode:
+		This example can run on RAM/ROM mode.
+					
+		Note: If want to burn hex file to board by using Flash Magic, these jumpers need
+		to be connected:
+			- MCB1700 with LPC1768 ver.1:
+				+ RST: ON
+				+ ISP: ON
+			- IAR LPC1768 KickStart vers.A:
+				+ RST_E: ON
+				+ ISP_E: ON
+		
+		(Please reference "LPC1000 Software Development Toolchain" - chapter 4 "Creating and working with
+		LPC1000CMSIS project" for more information)
+	
+	Step to run:
+		- Step 1: Build example.
+		- Step 2: Burn hex file into board (if run on ROM mode)
+		- Step 3: Configure hardward as above instruction
+		- Step 4: Run example
+				  - Test tail-chaining interrupt mode:
+				  	+ Hit INT0 button to generate EXT0. Led P1.29 will blink 10 times
+				  	When P1.29 is blinking, turn ADC potentiometer and see if EXT3 pre-empt EXT0 or not.
+				  	When EXT0 executes finised, EXT3 will bink led P1.28 10 times.
+				  - Test late-arriving interrupt mode:
+				  	+ Turn ADC potentiometer to generate EXT3, Led P1.28 will blink 10 times.
+				  	When P1.28 is blinking, press INT0 button to see EXT0 pre-empt EXT3.
+				  	Led P1.29 will blink instead led P1.28. After P1.29 blink 10 times, P1.28 continues
+				  	blink remain times.
+					
+			
+		(Pls see "LPC17xx Example Description" document - chapter "Examples > NVIC > Priority"
+		for more details)
+		
+@Tip:
+	- Open \EWARM\*.eww project file to run example on IAR
+	- Open \RVMDK\*.uvproj project file to run example on Keil

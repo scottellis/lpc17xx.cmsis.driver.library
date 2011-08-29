@@ -1,0 +1,3 @@
+SET NXPMCU_WINBASE=%CD%
+SET PROJ_ROOT=%NXPMCU_WINBASE:\=/%
+"eclipse.exe"

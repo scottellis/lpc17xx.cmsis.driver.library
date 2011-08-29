@@ -1,0 +1,147 @@
+/**********************************************************************
+* $Id$		abstract.txt 			
+*//**
+* @file		abstract.txt 
+* @brief	Example description file
+* @version	2.0
+* @date		
+* @author	NXP MCU SW Application Team
+*
+* Copyright(C) 2010, NXP Semiconductor
+* All rights reserved.
+*
+***********************************************************************
+* Software that is described herein is for illustrative purposes only
+* which provides customers with programming information regarding the
+* products. This software is supplied "AS IS" without any warranties.
+* NXP Semiconductors assumes no responsibility or liability for the
+* use of the software, conveys no license or title under any patent,
+* copyright, or mask work right to the product. NXP Semiconductors
+* reserves the right to make changes in the software without
+* notification. NXP Semiconductors also make no representation or
+* warranty that such application will be suitable for the specified
+* use without further testing or modification.
+**********************************************************************/
+  
+@Example description:
+	Purpose:
+		This example describes how to use USBDEV on LPC1768 to demo the virtual COM port.
+	Process:	                                                 
+		Clock Settings:
+		   - XTAL                   =  12 MHz
+		   - PLL                    =  400 MHz
+		   - processor clock = CCLK =  100 MHz
+		   - USB clock              =  48 MHz
+		   - CCLK / 4 clock         =  25 MHz
+		
+		The PC will install a virtual COM port on the PC (see Driver Installation).
+		After installation an additional port "LPC17xx USB VCom Port(COMx)"
+		can be found under System/Hardware/Device Manager/Ports(COM&LPT).
+		Number "x" is not fixed as different PC configuration may have different 
+		"x" displayed on the device manager. The USB host driver assigns "x" 
+		dynamically based on the existing COM port configuration of the system.
+		
+		Testing the USB Virtual COM port with serial cable:
+
+  		Open two Hyperterminal windows. 
+      		One with "LPC17xx USB VCom Port(COMx)" 
+      		One with "Communications Port (COM1)".
+  		Connect PC port COM1 to the comport on the board and open "COM1" 
+  		and "COMx". Data from COM1 will be echoed on "COMx" and visa versa. 
+  		So, this is bi-directional communication between the physical COM
+  		port 0 or 1 on the board and the virtual COM port COMx on host PC.
+  		By default, COM PORT1 on the board is used for VirtualCOM port test.
+  		In order to use COM PORT0 on the board, modify the definition PORT_NUM
+  		from 1 to 0 in serial.h, recompile and reprogram the flash. RST jumper
+  		needs to removed to start the Virtual COM port test.     
+		
+@Driver Installation:
+     "Welcome to the Found New Hardware Wizard" appears
+     - select 'No, not this time'
+     - press  'Next'
+
+     - select 'Install from a list or specific location (Advanced)'
+     - press  'Next'
+
+     - select 'Search for the best driver in these locations'
+     - check  'include this location in the serach'
+     - set to <project folder>
+     - press 'Next'
+
+     "Hardware Installation" appears
+     "has not passed Windows Logo testing..."
+     - press 'Continue Anyway'
+
+     "Completing the Found New Hardware Wizard" appears
+     - press 'Finish'
+     		
+@Directory contents:
+	\EWARM: includes EWARM (IAR) project and configuration files
+	\Keil:	includes RVMDK (Keil)project and configuration files 
+	
+	cdc.h: USB CDC (Communication Device) Definitions
+	cdcuser.h/.c: USB Communication Device Class User module
+	lpc17xx_libcfg.h: Library configuration file - include needed driver library for this example 
+	serial.h/.c: serial port handling for LPC17xx
+	usb.h:  USB Definitions
+	usbcfg.h: USB Custom Configuration
+	usbcore.h/.c: USB Core Module
+	usbdesc.h/.c: USB Descriptors
+	usbhw.h/.c: SB Hardware Layer Module
+	usbreg.h: USB Hardware Layer Definitions for NXP Semiconductors LPC 
+	usbuser.h/.c: USB Custom User Module
+	vcomdemo.h/.c: main program	
+	makefile: Example's makefile (to build with GNU toolchain)
+	lpc17xx-vom.inf: driver info for VCOM LPC17xx (used when Windows requires install driver)
+
+@How to run:
+	Hardware configuration:		
+		This example was tested only on:
+			Keil MCB1700 with LPC1768 vers.1
+				These jumpers must be configured as following:
+				- VDDIO: ON
+				- VDDREGS: ON 
+				- VBUS: ON
+				- D+: DEVICE
+				- D-: DEVICE
+				- UMODE: 1-2 (USB)
+				- E/U: 1-2 (USB)
+				- Remain jumpers: OFF
+	
+	Running mode:
+		This example can run on RAM/ROM mode.
+					
+		Note: If want to burn hex file to board by using Flash Magic, these jumpers need
+		to be connected:
+			- MCB1700 with LPC1768 ver.1:
+				+ RST: ON
+				+ ISP: ON
+			- IAR LPC1768 KickStart vers.A:
+				+ RST_E: ON
+				+ ISP_E: ON
+		
+		(Please reference "LPC1000 Software Development Toolchain" - chapter 4 "Creating and working with
+		LPC1000CMSIS project" for more information)
+	
+	Step to run:
+		- Step 1: Build example.
+		- Step 2: Burn hex file into board (if run on ROM mode)
+		- Step 3: Configure hardware as above instruction 
+		- Step 4: Hit reset button to run example. (install driver if required)
+		- Step 5: After see UGL(USB Good Link) led on board turn on, open Device Manager > Ports (COM & LPT)
+				  see if "LPC17xx USB Vcom Port (COMx)" appears or not. 
+		- Step 6: Open one HyperTerminal for COM1 and other for COMx with below configuration:
+					- 9600 bps
+					- 8 data bits
+					- none parity
+					- 1 stop bit
+					- None flow control
+		- Step 7: Sure that you already connected COM1 port on board with PC. Type any character on 
+				one HyperTerminal screen and see this character will be echoed in other screen and vice versa 
+		
+		(Pls see "LPC17xx Example Description" document - chapter "Examples > USBDEV > USBCDC"
+		for more details)
+		
+@Tip:
+	- Open \EWARM\*.eww project file to run example on IAR
+	- Open \RVMDK\*.uvproj project file to run example on Keil

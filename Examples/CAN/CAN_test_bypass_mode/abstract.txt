@@ -1,0 +1,103 @@
+/**********************************************************************
+* $Id$		abstract.txt 			
+*//**
+* @file		abstract.txt 
+* @brief	Example description file
+* @version	2.0
+* @date		
+* @author	NXP MCU SW Application Team
+*
+* Copyright(C) 2010, NXP Semiconductor
+* All rights reserved.
+*
+***********************************************************************
+* Software that is described herein is for illustrative purposes only
+* which provides customers with programming information regarding the
+* products. This software is supplied "AS IS" without any warranties.
+* NXP Semiconductors assumes no responsibility or liability for the
+* use of the software, conveys no license or title under any patent,
+* copyright, or mask work right to the product. NXP Semiconductors
+* reserves the right to make changes in the software without
+* notification. NXP Semiconductors also make no representation or
+* warranty that such application will be suitable for the specified
+* use without further testing or modification.
+**********************************************************************/
+  
+@Example description:
+	Purpose:
+		This example describes how to test CAN operation by using bypass mode
+	Process:
+		Using 2 CAN peripheral CAN1 and CAN2 in same eval board to test CAN operation.
+		This example just supports extended ID format.
+		Both CAN1 and CAN2 are set baudrate at 125KHz.
+		
+		In bypass mode, AFULT will be disable, all messages could be received.
+		One transmit message is initialized with ID = 0x00001234 and data = 0x00.
+		CAN1 will send this message to CAN2
+		
+		Whenever CAN2 receive message, CAN interrupt service routine "CAN_IRQHandler"will be 
+		invoked to receive message, print message's data into serial display via UART0 port, 
+		increase message's ID and data for next transmittion by CAN1.
+		This process is a endless loop.
+		
+		Open serial display to observe CAN transfer processing. 
+			
+@Directory contents:
+	\EWARM: includes EWARM (IAR) project and configuration files
+	\Keil:	includes RVMDK (Keil)project and configuration files 
+	
+	lpc17xx_libcfg.h: Library configuration file - include needed driver library for this example 
+	makefile: Example's makefile (to build with GNU toolchain)
+	can_test_bypass_mode.c: Main program
+
+@How to run:
+	Hardware configuration:		
+		This example was tested only on:
+			Keil MCB1700 with LPC1768 vers.1
+				These jumpers must be configured as following:
+				- VDDIO: ON
+				- VDDREGS: ON 
+				- VBUS: ON
+				- Remain jumpers: OFF
+				
+		CAN connection:
+			- CAN1-Pin2 connects to CAN2-Pin2 (CAN-L)
+			- CAN1-Pin7 connects to CAN2-Pin7 (CAN-H)
+				
+		Serial display configuration: (e.g: TeraTerm, Hyperterminal, Flash Magic...) 
+			– 115200bps 
+			– 8 data bit 
+			– No parity 
+			– 1 stop bit 
+			– No flow control 
+	
+	Running mode:
+		This example can run on RAM/ROM mode.
+					
+		Note: If want to burn hex file to board by using Flash Magic, these jumpers need
+		to be connected:
+			- MCB1700 with LPC1768 ver.1:
+				+ RST: ON
+				+ ISP: ON
+			- IAR LPC1768 KickStart vers.A:
+				+ RST_E: ON
+				+ ISP_E: ON
+						
+		(Please reference "LPC1000 Software Development Toolchain" - chapter 4 "Creating and working with
+		LPC1000CMSIS project" for more information)
+	
+	Step to run:
+		- Step 1: Build example.
+		- Step 2: Burn hex file into board (if run on ROM mode)
+		- Step 3: Connect UART0 on this board to COM port on your computer
+		- Step 4: Configure hardware and serial display as above instruction 
+		- Step 5: Run example:
+			- Press "1" to initialize message and AFLUT 
+			- Press "2" to start CAN operation
+		
+		(Pls see "LPC17xx Example Description" document - chapter "Examples > CAN > CAN_test_bypass_mode"
+		for more details)
+		
+@Tip:
+	- Open \EWARM\*.eww project file to run example on IAR
+	- Open \RVMDK\*.uvproj project file to run example on Keil

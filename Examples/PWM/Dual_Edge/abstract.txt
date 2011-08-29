@@ -1,0 +1,106 @@
+/**********************************************************************
+* $Id$		abstract.txt 			
+*//**
+* @file		abstract.txt 
+* @brief	Example description file
+* @version	2.0
+* @date		
+* @author	NXP MCU SW Application Team
+*
+* Copyright(C) 2010, NXP Semiconductor
+* All rights reserved.
+*
+***********************************************************************
+* Software that is described herein is for illustrative purposes only
+* which provides customers with programming information regarding the
+* products. This software is supplied "AS IS" without any warranties.
+* NXP Semiconductors assumes no responsibility or liability for the
+* use of the software, conveys no license or title under any patent,
+* copyright, or mask work right to the product. NXP Semiconductors
+* reserves the right to make changes in the software without
+* notification. NXP Semiconductors also make no representation or
+* warranty that such application will be suitable for the specified
+* use without further testing or modification.
+**********************************************************************/
+  
+@Example description:
+	Purpose:
+		This example describes how to generate PWM signal on 3 Channels in both 
+		edge mode and single mode.
+	Process:
+		This program illustrates the PWM signal on 3 Channels in both edge mode
+		and single mode.
+		Peripheral clock for PWM: PWM_PCLK = CCLK / 4 = 72MHz/4 = 18MHz and there is no
+		prescale for PWM. The PWM timer/counter clock is at 18MHz. The base rate is set to 100
+		The base PWM frequency is at 18MHz/100 = 180 KHz.
+		Each PWM channel will be configured as following:
+			- Channel 2: Double Edge (P2.1)
+			- Channel 4: Double Edge (P2.5)
+			- Channel 5: Single Edge (P2.6)
+		The Match register values are as follows:
+			- MR0 = 100 (PWM rate)
+			- MR1 = 41, MR2 = 78 (PWM2 output)
+			- MR3 = 53, MR4 = 27 (PWM4 output)
+			- MR5 = 65 (PWM5 output)
+		PWM Duty on each PWM channel:
+			- Channel 2: Set by match 1, Reset by match 2.
+			- Channel 4: Set by match 3, Reset by match 4.
+			- Channel 5: Set by match 0, Reset by match 5.
+		Using Oscilloscope to observe the PWM signals	
+
+@Directory contents:
+	\EWARM: includes EWARM (IAR) project and configuration files
+	\Keil:	includes RVMDK (Keil)project and configuration files
+	 
+	lpc17xx_libcfg.h: Library configuration file - include needed driver library for this example 
+	makefile: Example's makefile (to build with GNU toolchain)
+	pwm_dual_edge.c: Main program
+
+@How to run:
+	Hardware configuration:		
+		This example was tested on:
+			Keil MCB1700 with LPC1768 vers.1
+				These jumpers must be configured as following:
+				- VDDIO: ON
+				- VDDREGS: ON 
+				- VBUS: ON
+				- Remain jumpers: OFF
+			IAR LPC1768 KickStart vers.A
+				These jumpers must be configured as following:
+				- PWR_SEL: depend on power source
+				- DBG_EN : ON
+				- Remain jumpers: OFF
+			
+			PWM Pin selected:
+				Observe PWM wave signal on these pin
+				- PWM1.2 (channel 2): P2.1
+				- PWM1.4 (channel 4): P2.3
+				- PWM1.5 (channel 5): P2.4
+								
+	Running mode:
+		This example can run on RAM/ROM mode.
+					
+		Note: If want to burn hex file to board by using Flash Magic, these jumpers need
+		to be connected:
+			- MCB1700 with LPC1768 ver.1:
+				+ RST: ON
+				+ ISP: ON
+			- IAR LPC1768 KickStart vers.A:
+				+ RST_E: ON
+				+ ISP_E: ON
+		
+		(Please reference "LPC1000 Software Development Toolchain" - chapter 4 "Creating and working with
+		LPC1000CMSIS project" for more information)
+	
+	Step to run:
+		- Step 1: Build example.
+		- Step 2: Burn hex file into board (if run on ROM mode)
+		- Step 3: Configure hardware as above instruction 
+		- Step 4: Run example, Use oscilloscope to monitor the wave form
+		
+		(Pls see "LPC17xx Example Description" document - chapter "Examples > PWM > Dual_Edge"
+		for more details)
+		
+@Tip:
+	- Open \EWARM\*.eww project file to run example on IAR
+	- Open \RVMDK\*.uvproj project file to run example on Keil

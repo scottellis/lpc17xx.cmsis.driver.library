@@ -1,0 +1,114 @@
+/**********************************************************************
+* $Id$		abstract.txt 			
+*//**
+* @file		abstract.txt 
+* @brief	Example description file
+* @version	2.0
+* @date		
+* @author	NXP MCU SW Application Team
+*
+* Copyright(C) 2010, NXP Semiconductor
+* All rights reserved.
+*
+***********************************************************************
+* Software that is described herein is for illustrative purposes only
+* which provides customers with programming information regarding the
+* products. This software is supplied "AS IS" without any warranties.
+* NXP Semiconductors assumes no responsibility or liability for the
+* use of the software, conveys no license or title under any patent,
+* copyright, or mask work right to the product. NXP Semiconductors
+* reserves the right to make changes in the software without
+* notification. NXP Semiconductors also make no representation or
+* warranty that such application will be suitable for the specified
+* use without further testing or modification.
+**********************************************************************/
+  
+@Example description:
+	Purpose:
+		This example describes how to use WDT to generate interrupt after a specific time.
+	Process:
+		In this example, WDT disables reset function, WDT just generates interrupt when the 
+		Watchdog times out. 
+		WDT setting:
+			- clock source: IRC (Internal RC oscillator)
+			- time-out = 5000000us = 5s
+		Before WDT interrupt, current value of Watchdog timer will be written continuously 
+		into serial display (these value will be decreased from 5000000 to 0). After 5s, 
+		the Watchdog timer times out, WDT interrupt sevice routine 'WDT_IRQHandler( )' will
+		be invoked to change 'wdt_flag'. The notice sentence will be display and LED begin blinky.
+		
+		Note that: dispaly data via UART will caused delay.
+		
+@Directory contents:
+	\EWARM: includes EWARM (IAR) project and configuration files
+	\Keil:	includes RVMDK (Keil)project and configuration files 
+	 
+	lpc17xx_libcfg.h: Library configuration file - include needed driver library for this example 
+	makefile: Example's makefile (to build with GNU toolchain)
+	wdt_interrupt_test.c: Main program
+
+@How to run:
+	Hardware configuration:		
+		This example was tested on:
+			Keil MCB1700 with LPC1768 vers.1
+				These jumpers must be configured as following:
+				- VDDIO: ON
+				- VDDREGS: ON 
+				- VBUS: ON
+				- LED: ON
+				- Remain jumpers: OFF
+			IAR LPC1768 KickStart vers.A
+				These jumpers must be configured as following:
+				- PWR_SEL: depend on power source
+				- DBG_EN : ON
+				- Remain jumpers: OFF
+				
+	Serial display configuration: (e.g: TeraTerm, Hyperterminal, Flash Magic...) 
+		– 115200bps 
+		– 8 data bit 
+		– No parity 
+		– 1 stop bit 
+		– No flow control 
+	
+	Running mode:
+		RAM mode:   This example can be run on RAM mode with debugger. 
+					All files must be build to .elf file, this file will be loaded into RAM through a 
+					debugger tool before running 
+		ROM(FLASH)mode: This example can be run on ROM mode with debugger or standalone after burning. 
+					All files in each example must be built to .hex file. This file will be burned into 
+					ROM(Flash) memory through an external tool (i.e: Flash Magic...) befor running.
+					
+					Note: If want to burn hex file to board by using Flash Magic, these jumpers need
+					to be connected:
+					- MCB1700 with LPC1768 ver.1:
+						+ RST: ON
+						+ ISP: ON
+					- IAR LPC1768 KickStart vers.A:
+						+ RST_E: ON
+						+ ISP_E: ON
+					
+		(Please reference "LPC1000 Software Development Toolchain" - chapter 4 "Creating and working with
+		LPC1000CMSIS project" for more information)
+	
+	Step to run:
+		- Step 1: Choose correct working board by uncomment correct defined board in main.c file
+			+ If using MCB1700 board, uncomment "#define MCB_LPC_1768"
+			+ If using IAR-LPC1768-KS board, uncomment "#define MCB_LPC_1768"
+			(Should not uncomment both symbols at the same time)
+		- Step 2: Build example.
+		- Step 3: Burn hex file into board (if run on ROM mode)
+		- Step 4: Connect UART0 on this board to COM port on your computer
+		- Step 5: Configure hardware and serial display as above instruction 
+		- Step 6: Run example and observe data on serial display
+					+ Press '1' to start WDT operation
+					+ See the current value of WDT displayed on screen
+					+ After WDT interrupt, the notice sentence will be display and LED begin blink.
+				Note that: 	If using MCB1700 board, LED2.2 is available
+							If using IAR1768 board, LED1 is available
+							
+		(Pls see "LPC17xx Example Description" document - chapter "Examples > WDT > INTERRUPT"
+			for more details)
+		
+@Tip:
+	- Open \EWARM\*.eww project file to run example on IAR
+	- Open \RVMDK\*.uvproj project file to run example on Keil

@@ -1,0 +1,135 @@
+/**********************************************************************
+* $Id$		abstract.txt 			
+*//**
+* @file		abstract.txt 
+* @brief	Example description file
+* @version	2.0
+* @date		
+* @author	NXP MCU SW Application Team
+*
+* Copyright(C) 2010, NXP Semiconductor
+* All rights reserved.
+*
+***********************************************************************
+* Software that is described herein is for illustrative purposes only
+* which provides customers with programming information regarding the
+* products. This software is supplied "AS IS" without any warranties.
+* NXP Semiconductors assumes no responsibility or liability for the
+* use of the software, conveys no license or title under any patent,
+* copyright, or mask work right to the product. NXP Semiconductors
+* reserves the right to make changes in the software without
+* notification. NXP Semiconductors also make no representation or
+* warranty that such application will be suitable for the specified
+* use without further testing or modification.
+**********************************************************************/
+  
+@Example description:
+	Purpose:
+		This example describes how to test Motor Control PWM module in LPC17xx.
+	Process:
+		Tested function on MCPWM could be: 
+			- 3-phase AC mode: inverted output is enable, A0 and A1 output pin is internally routed to A0 signal
+			- 3-phase DC mode: inverted output is enable
+			- capture on Motor Control: in this case is used to detect the falling edge on MCO0B output pin.
+		  		The MCFB0 input pin therefore must be connected to MCO0B.
+					+ Capture Channel 0.
+					+ Capture falling edge on MCFB0 input pin.
+					+ Interrupt enabled on capture event.
+		
+		Channel 0,1,2 will be configured as follows:
+			- edge aligned operation 
+			- polarity pin: Passive state is LOW, active state is HIGH
+			- disable dead time
+			- enable update value
+			- period time = 300
+			- pulse width value:
+				+ channel 0 = 0
+				+ channel 1 = 100
+				+ channel 2 = 200
+		The program will update the value for pulse width for 3 channel continuously from 0 to 300, increase 20 
+		each update time. After each update, the serial will write "Update!" into screen.
+		After that, 'CapFlag' will be checked if detect falling edge on MCO0B or not.
+		If yes, the program will print the current capture value into screen.
+		
+@Directory contents:
+	\EWARM: includes EWARM (IAR) project and configuration files
+	\Keil:	includes RVMDK (Keil)project and configuration files 
+	 
+	lpc17xx_libcfg.h: Library configuration file - include needed driver library for this example 
+	makefile: Example's makefile (to build with GNU toolchain)
+	mcpwm_simple.c: Main program
+
+@How to run:
+	Hardware configuration:		
+		This example was tested on:
+			Keil MCB1700 with LPC1768 vers.1
+				These jumpers must be configured as following:
+				- VDDIO: ON
+				- VDDREGS: ON 
+				- VBUS: ON
+				- AD0.2: ON
+				- LED: ON
+				- Remain jumpers: OFF
+
+			IAR LPC1768 KickStart vers.A
+				These jumpers must be configured as following:
+				- PWR_SEL: depend on power source
+				- DBG_EN : ON
+				- Remain jumpers: OFF
+				
+		MCPWM connection:
+			- For the capture function, pin MCFB/MCI0 (P1.20) must be connected with pin MC0B (P1.22)
+			to capture the pulse-width of signal output of MC0B from the beginning to
+			the falling edge.			
+			- The output signal can be observed by oscilloscope on these pins below:
+				+ P1.19 - MC0A
+				+ P1.22 - MC0B
+				+ P1.25 - MC1A
+				+ P1.26 - MC1B
+				+ P1.28 - MC2A
+				+ P1.29 - MC2B
+				
+		Serial display configuration:(e.g: , TeraTerm, Hyperterminal, Flash Magic...) 
+			– 115200bps 
+			– 8 data bit 
+			– No parity 
+			– 1 stop bit 
+			– No flow control 		
+	
+	Running mode:
+		This example can run on RAM/ROM mode.
+					
+		Note: If want to burn hex file to board by using Flash Magic, these jumpers need
+		to be connected:
+			- MCB1700 with LPC1768 ver.1:
+				+ RST: ON
+				+ ISP: ON
+			- IAR LPC1768 KickStart vers.A:
+				+ RST_E: ON
+				+ ISP_E: ON
+		
+		(Please reference "LPC1000 Software Development Toolchain" - chapter 4 "Creating and working with
+		LPC1000CMSIS project" for more information)
+	
+	Step to run:
+		- Step 1: Chose MCPWM mode that want to test
+			+ If want to test 3-phase DC mode, setting: 
+					#define DC_MODE_TEST	1
+			+ If want to test 3-phase AC mode, setting:
+					#define AC_MODE_TEST	1
+			+ If want to test Capture MCPWM mode, setting:
+					#define CAPTURE_MODE_TEST	1
+			(Should not enable DC mode and AC mode at the same time)
+		- Step 2: Build example.
+		- Step 3: Burn hex file into board (if run on ROM mode)
+		- Step 4: Connect UART0 on this board to COM port on your computer
+		- Step 5: Configure hardware and serial display as above instruction 
+		- Step 6: Run example. See capture result on serial display (if use Capture mode)
+				  And use oscilloscope to monitor the wave form.
+		
+		(Pls see "LPC17xx Example Description" document - chapter "Examples > MCPWM > MCPWMSimple"
+		for more details)
+		
+@Tip:
+	- Open \EWARM\*.eww project file to run example on IAR
+	- Open \RVMDK\*.uvproj project file to run example on Keil

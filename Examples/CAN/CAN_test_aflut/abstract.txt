@@ -1,0 +1,122 @@
+/**********************************************************************
+* $Id$		abstract.txt 			
+*//**
+* @file		abstract.txt 
+* @brief	Example description file
+* @version	2.0
+* @date		
+* @author	NXP MCU SW Application Team
+*
+* Copyright(C) 2010, NXP Semiconductor
+* All rights reserved.
+*
+***********************************************************************
+* Software that is described herein is for illustrative purposes only
+* which provides customers with programming information regarding the
+* products. This software is supplied "AS IS" without any warranties.
+* NXP Semiconductors assumes no responsibility or liability for the
+* use of the software, conveys no license or title under any patent,
+* copyright, or mask work right to the product. NXP Semiconductors
+* reserves the right to make changes in the software without
+* notification. NXP Semiconductors also make no representation or
+* warranty that such application will be suitable for the specified
+* use without further testing or modification.
+**********************************************************************/
+  
+@Example description:
+	Purpose:
+		This example describes how to use CAN driver functions for setup and change AFLUT table dynamically.
+	Process:
+		Using 2 CAN peripheral CAN1 and CAN2 to test CAN operation.
+		This example supports all kind of identifier: FullCAN, explicit or group format.
+		Both CAN1 and CAN2 are set baudrate at 125KHz.
+		First, settup AF look-up table with 5 sections:
+			- 6 entries for FullCAN section
+			- 6 entries for Standard Frame Format (SFF) section
+			- 6 entries for Group Standard Frame Format (SFF_GRP) section
+			- 6 entries for Extended Frame Format (EFF) section
+			- 6 entries for Group Extended Frame Format (EFF_GRP) section
+		Initialize 10 messages:
+			- 1st message with 11-bit ID which exit in AF Look-up Table in FullCAN Section
+			- 2nd message with 11-bit ID which not exit in AF Look-up Table 
+			- 3th message with 11-bit ID which exit in AF Look-up Table in SFF Section
+			- 4th message with 11-bit ID which not exit in AF Look-up Table
+			- 5th message with 11-bit ID which exit in AF Look-up Table in Group SFF Section
+			- 6th message with 11-bit ID which not exit in AF Look-up Table
+			- 7th message with 29-bit ID which exit in AF Look-up Table in EFF Section
+			- 8th message with 29-bit ID which not exit in AF Look-up Table
+			- 9th message with 29-bit ID which exit in AF Look-up Table in Group of EFF Section
+			- 10th message with 29-bit ID which not exit in AF Look-up Table
+		Then, send 10 messages from CAN1 to CAN2, whenever CAN2 receive message that has ID exit in its AFLUT, CAN
+		receive interrupt occurs, CAN interrupt service routine "CAN_IRQHandler" will be invoked to receive message 
+		and save it in array "AFRxMsg[]".
+		In this case, message 1,3,5,7,9 will be received.
+		After that, "CAN_ChangeAFTable" function will be called to load and remove entries in AFLUT in such a way as 
+		to receive messages 2,4,6,9,10 instead of 1,3,5,7,9.
+		Re-send 10 messages and re-received messages to check if AFLUT operation correct or not.
+		
+		Open serial display window to observe CAN transfer processing. 
+			
+@Directory contents:
+	\EWARM: includes EWARM (IAR) project and configuration files
+	\Keil:	includes RVMDK (Keil)project and configuration files 
+	 
+	lpc17xx_libcfg.h: Library configuration file - include needed driver library for this example 
+	makefile: Example's makefile (to build with GNU toolchain)
+	can_test_aflut.c: Main program
+
+@How to run:
+	Hardware configuration:		
+		This example was tested only on:
+			Keil MCB1700 with LPC1768 vers.1
+				These jumpers must be configured as following:
+				- VDDIO: ON
+				- VDDREGS: ON 
+				- VBUS: ON
+				- Remain jumpers: OFF
+				
+		CAN connection:
+			- CAN1-Pin2 connects to CAN2-Pin2 (CAN-L)
+			- CAN1-Pin7 connects to CAN2-Pin7 (CAN-H)
+				
+		Serial display configuration:(e.g: TeraTerm, Hyperterminal, Flash Magic...) 
+			– 115200bps 
+			– 8 data bit 
+			– No parity 
+			– 1 stop bit 
+			– No flow control 
+	
+	Running mode:
+		This example can run on RAM/ROM mode.
+					
+		Note: If want to burn hex file to board by using Flash Magic, these jumpers need
+		to be connected:
+			- MCB1700 with LPC1768 ver.1:
+				+ RST: ON
+				+ ISP: ON
+			- IAR LPC1768 KickStart vers.A:
+				+ RST_E: ON
+				+ ISP_E: ON
+		
+		(Please reference "LPC1000 Software Development Toolchain" - chapter 4 "Creating and working with
+		LPC1000CMSIS project" for more information)
+	
+	Step to run:
+		- Step 1: Build example.
+		- Step 2: Burn hex file into board (if run on ROM mode)
+		- Step 3: Connect UART0 on this board to COM port on your computer
+		- Step 4: Configure hardware and serial display as above instruction 
+		- Step 5: Run example:
+			- Press "1" to initialize message and AFLUT 
+			- Press "2" to start CAN operation
+			- Press "3" to display received messages
+			- Press "4" to change AFLUT
+			- Press "5" to re-send message
+			- Press "6" to display received messages
+			
+		(Pls see "LPC17xx Example Description" document - chapter "Examples > CAN > CAN_test_aflut"
+		for more details)
+		
+@Tip:
+	- Open \EWARM\*.eww project file to run example on IAR
+	- Open \RVMDK\*.uvproj project file to run example on Keil

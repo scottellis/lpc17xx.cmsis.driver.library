@@ -1,0 +1,118 @@
+/**********************************************************************
+* $Id$		abstract.txt 			
+*//**
+* @file		abstract.txt 
+* @brief	Example description file
+* @version	2.0
+* @date		
+* @author	NXP MCU SW Application Team
+*
+* Copyright(C) 2010, NXP Semiconductor
+* All rights reserved.
+*
+***********************************************************************
+* Software that is described herein is for illustrative purposes only
+* which provides customers with programming information regarding the
+* products. This software is supplied "AS IS" without any warranties.
+* NXP Semiconductors assumes no responsibility or liability for the
+* use of the software, conveys no license or title under any patent,
+* copyright, or mask work right to the product. NXP Semiconductors
+* reserves the right to make changes in the software without
+* notification. NXP Semiconductors also make no representation or
+* warranty that such application will be suitable for the specified
+* use without further testing or modification.
+**********************************************************************/
+  
+@Example description:
+	Purpose:
+		This example describes how to write a simple USB Mass Storage application on LPC1768.
+	Process:
+		The MassStorage project is a Mass Storage simple demo run on LPC1768		                                                
+		Clock Settings:
+		   - XTAL                   =  12 MHz
+		   - PLL                    =  400 MHz
+		   - processor clock = CCLK =  100 MHz
+		   - USB clock              =  48 MHz
+		   - CCLK / 4 clock         =  25 MHz
+		
+		It demonstrates an USB Memory based on USB Mass Storage Class.		
+		The USB Memory is automatically recognized by the host PC
+		running Windows which will load a generic Mass Storage driver.
+
+@Directory contents:
+	\EWARM: includes EWARM (IAR) project and configuration files
+	\Keil:	includes RVMDK (Keil)project and configuration files 
+	
+	DiskImg.c: 		Disk Image (LPC17xx) data
+	lpc17xx_libcfg.h: Library configuration file - include needed driver library for this example 
+	memory.h/.c: 	USB Memory Storage
+	msc.h: 			USB Mass Storage Class Definition
+	mscuser.h/.c: 	Mass Storage Class Custom User
+	usb.h: 			USB Definitions
+	usbcfg.h: 		USB Configurate Definition
+	usbcore.h/.c:	USB Core Module
+	usbdesc.h/.c: 	USB Descriptors
+	usbhw.h/.c: 	USB Hardware Layer
+	usbreg.h: 		USB Hardware Layer Definitions for NXP Semiconductors LPC 
+	usbuser.h/.c: 	USB Custom User Module
+	memory.h/.c: 	USB Memory Storage Demo (main program)
+	makefile: 		make file (to build with GNU toolchain)
+
+@How to run:
+	Hardware configuration:		
+		This example was tested on:
+			Keil MCB1700 with LPC1768 vers.1
+				These jumpers must be configured as following:
+				- VDDIO: ON
+				- VDDREGS: ON 
+				- VBUS: ON
+				- LED: ON
+				- INT1: ON
+				- D+: DEVICE
+				- D-: DEVICE
+				- UMODE: 1-2 (USB)
+				- E/U: 1-2 (USB)
+				- Remain jumpers: OFF
+			IAR LPC1768 KickStart vers.A
+				These jumpers must be configured as following:
+				- PWR_SEL: depend on power source
+				- DBG_EN : ON
+				- USB_D- : 1-2 (USB device is active)
+				- USB_D+ : 1-2 (USB device is active)
+				- Remain jumpers: OFF
+	
+	Running mode:
+		RAM mode:   This example can be run on RAM mode with debugger. 
+					All files must be build to .elf file, this file will be loaded into RAM through a 
+					debugger tool before running 
+		ROM(FLASH)mode: This example can be run on ROM mode with debugger or standalone after burning. 
+					All files in each example must be built to .hex file. This file will be burned into 
+					ROM(Flash) memory through an external tool (i.e: Flash Magic...) befor running.
+					
+					Note: If want to burn hex file to board by using Flash Magic, these jumpers need
+					to be connected:
+					- MCB1700 with LPC1768 ver.1:
+						+ RST: ON
+						+ ISP: ON
+					- IAR LPC1768 KickStart vers.A:
+						+ RST_E: ON
+						+ ISP_E: ON
+		
+		(Please reference "LPC1000 Software Development Toolchain" - chapter 4 "Creating and working with
+		LPC1000CMSIS project" for more information)
+	
+	Step to run:
+		- Step 1: Build example.
+		- Step 2: Burn hex file into board (if run on ROM mode)
+		- Step 3: Configure hardware as above instruction 
+		- Step 4: Hit reset button to run example.
+		- Step 5: After see UGL(USB Good Link). Open My Computer, you will see 'LPC17xx' disk.
+		- Step 6: Open this disk, you will see 'Readme.txt' file (it has read-only attribute)
+		- Step 7: Try to copy/delete another file into disk to test if Mass Storage is work well or not
+		
+		(Pls see "LPC17xx Example Description" document - chapter "Examples > USBDEV > USBMassStorage"
+		for more details)
+		
+@Tip:
+	- Open \EWARM\*.eww project file to run example on IAR
+	- Open \RVMDK\*.uvproj project file to run example on Keil

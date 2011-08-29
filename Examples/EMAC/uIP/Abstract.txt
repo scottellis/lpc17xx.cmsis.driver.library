@@ -1,0 +1,130 @@
+/**********************************************************************
+* $Id$		abstract.txt 			
+*//**
+* @file		abstract.txt 
+* @brief	Example description file
+* @version	2.0
+* @date		
+* @author	NXP MCU SW Application Team
+*
+* Copyright(C) 2010, NXP Semiconductor
+* All rights reserved.
+*
+***********************************************************************
+* Software that is described herein is for illustrative purposes only
+* which provides customers with programming information regarding the
+* products. This software is supplied "AS IS" without any warranties.
+* NXP Semiconductors assumes no responsibility or liability for the
+* use of the software, conveys no license or title under any patent,
+* copyright, or mask work right to the product. NXP Semiconductors
+* reserves the right to make changes in the software without
+* notification. NXP Semiconductors also make no representation or
+* warranty that such application will be suitable for the specified
+* use without further testing or modification.
+**********************************************************************/
+  
+@Example description:
+	Purpose:
+		This example describes how to handle a  single network interface and 
+		contains the IP, ICMP, UDP and TCP protocols. 
+	Process:
+		The uIP TCP/IP stack is an extremely small implementation of the TCP/IP 
+		protocol suite intended for embedded systems running low-end 8 or 16-bit 
+		microcontrollers. The code size and RAM requirements of uIP is an order of 
+		magnitude smaller than other generic TCP/IP stacks today. 
+		
+		The uip_webserver implements WEB server.
+		The default IP address is:
+			192.168.0.100
+		The default router's IP address is:
+			192.168.0.1
+		The subnet mask is:
+			255.255.255.0
+		IP address on your PC should not be one of these IP addresses above
+			
+@Directory contents:
+	\EWARM: includes EWARM (IAR) project and configuration files
+	\Keil:	includes RVMDK (Keil)project and configuration files	
+	\apps: contains a few example applications
+		+ \dhcpc: Implementation of DHCPC protocol
+		+ \hello-world: A small example showing how to write applications with protosockets.
+		+ \resolv: DNS resolver
+		+ \smtp: SMTP E-mail sender
+		+ \telnetd: Implementation of TELNET network protocol
+		+ \webclient: Implementation of the HTTP client.
+		+ \webserver: Implementation of an HTTP server
+	\common: implement some supported standard functions (printf, serial..) 
+ 	\uip: contains files that implement uIP stack
+	\lpc17xx_port: include main program
+	makefile: Example's makefile (to build with GNU toolchain)
+
+@How to run:
+	Hardware configuration:	
+		This example is tested on:	
+			Keil MCB1700 vers.1
+				These jumpers must be configured as following:
+				- VDDIO: ON
+				- VDDREGS: ON
+				- VBUS: ON
+				- LED: ON
+				- E/C: 2-3 (Ethernet)
+				- E/U: 2-3 (Ethernet)
+				- Remain jumpers: OFF
+				Use Ethernet Physical Layer Transceiver: DP83848C 
+				MAC address: 1E-30-6C-A2-45-5E 
+			IAR LPC1768 vers.A
+				These jumpers must be configured as following:
+				- PWR_SEL: depending of power source
+				- DBG_EN : ON
+				- ACC_IRQ/LED2: 2-3 (LED2)
+				- Remain jumpers: OFF
+				Use Ethernet Physical Layer Transceiver: FSZ8721BL 
+				MAC address: 0-FF-FF-FF-FF-FF
+				
+		Serial display configuration: (e.g: TeraTerm, Hyperterminal, Flash Magic...) 
+			– 115200bps 
+			– 8 data bit 
+			– No parity 
+			– 1 stop bit 
+			– No flow control 
+	
+	Running mode:
+		This example can run only on ROM mode.
+					
+		Note: If want to burn hex file to board by using Flash Magic, these jumpers need
+		to be connected:
+			- MCB1700 with LPC1768 ver.1:
+				+ RST: ON
+				+ ISP: ON
+			- IAR LPC1768 KickStart vers.A:
+				+ RST_E: ON
+				+ ISP_E: ON
+		
+			(Please reference "LPC1000 Software Development Toolchain" - chapter 4 "Creating and working with
+			LPC1000CMSIS project" for more information)
+	
+	Step to run:
+		- Step 1: Choose correct working board by uncomment correct defined board in lpc17xx_emac.h file
+			+ If using MCB1700 board, uncomment "#define MCB_LPC_1768"
+			+ If using IAR-LPC1768-KS board, uncomment "#define MCB_LPC_1768"
+			(Should not uncomment both symbols at the same time)
+		- Step 2: Build example.
+		- Step 3: Burn hex file into board 
+		- Step 4: Use CrossOver cable to connect from your PC to ETH port on eval board
+		- Step 5: Connect UART0 on this board to COM port on your computer
+		- Step 6: Configure hardware and serial display as above instruction 
+		- Step 7: Re-config IP address on PC:
+					+ IP address: 192.168.0.x (x != 1, 100)
+					+ Subnet mask: 255.255.255.0
+		- Step 8: Reset board, monitor the status via serial display until EMAC initialized
+		- Step 9: Open command prompt window, execute 'ping 192.168.0.100' command
+		- Step 10: Open web browser, access to address "http://192.168.0.100" to display the content
+		           of the webpage.	
+		           
+		(Pls reference "LPC17xx Example Description" document - chapter "Examples > EMAC > uIP"
+		for more details)
+@Tip:
+	- Open \EWARM\*.eww project file to run example on IAR
+	- Open \RVMDK\*.uvproj project file to run example on Keil	
+	
+			

@@ -1,0 +1,26 @@
+########################################################################
+#
+# Configuration file for "make" session. 
+#
+########################################################################
+
+########################################################################
+#
+# Note: 
+# Add path of "tools" directory (in this folder) 
+# to the HEAD of SYSTEM PATH variable
+#
+########################################################################
+
+PROJ_ROOT			=C:/nxpdrv/LPC1700CMSIS
+CMCORE_TYPE			=CM3
+DEVICE				=LPC17xx
+MANUFACTURE			=NXP
+TOOL 				=gnu
+DEBUG_MODE			=1
+
+
+GNU_INSTALL_ROOT	=C:/Program Files/CodeSourcery/Sourcery G++ Lite
+GNU_VERSION			=4.3.3
+IAR_INSTALL_ROOT	=C:/Program Files/IAR Systems/Embedded Workbench 5.0 Kickstart
+KEIL_INSTALL_ROOT	=C:/Keil

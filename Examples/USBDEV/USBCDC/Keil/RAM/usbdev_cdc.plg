@@ -1,0 +1,12 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+E:\NXP\nxpmcu\LPC1700CMSIS\Examples\USBDEV\USBCDC\Keil\usbdev_cdc.uvproj
+Project File Date:  07/12/2010
+
+<h2>Output:</h2>
+Load "E:\\NXP\\nxpmcu\\LPC1700CMSIS\\Examples\\USBDEV\\USBCDC\\Keil\\RAM\\usbdev_cdc.AXF" 
+_____^
+*** error 56: cant open file

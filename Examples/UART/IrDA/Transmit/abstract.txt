@@ -1,0 +1,112 @@
+/**********************************************************************
+* $Id$		abstract.txt 			
+*//**
+* @file		abstract.txt 
+* @brief	Example description file
+* @version	2.0
+* @date		
+* @author	NXP MCU SW Application Team
+*
+* Copyright(C) 2010, NXP Semiconductor
+* All rights reserved.
+*
+***********************************************************************
+* Software that is described herein is for illustrative purposes only
+* which provides customers with programming information regarding the
+* products. This software is supplied "AS IS" without any warranties.
+* NXP Semiconductors assumes no responsibility or liability for the
+* use of the software, conveys no license or title under any patent,
+* copyright, or mask work right to the product. NXP Semiconductors
+* reserves the right to make changes in the software without
+* notification. NXP Semiconductors also make no representation or
+* warranty that such application will be suitable for the specified
+* use without further testing or modification.
+**********************************************************************/
+  
+@Example description:
+	Purpose:
+		This example, together with receive example, describes how to use UART in IrDA mode
+	Process:
+		UART0/UART1 configuration:
+			– 9600bps 
+			– 8 data bit 
+			– No parity 
+			– 1 stop bit 
+			– No flow control 
+			- Receive and transmit enable
+		UART3 configuration:
+			– 9600bps 
+			– 8 data bit 
+			– No parity 
+			– 1 stop bit 
+			– No flow control 
+			- Enable IrDA mode
+			- Transmit enable
+		
+		UART will print welcome screen first, then:
+			- Press ESC to exit.
+			- Press 'r' to print welcome screen menu again.
+			- Press two hex digits (each digit is from 0..F/f, ex: 1f means 0x1F) to form a byte value for UART3 TXD to transmit.
+			- Press other keys will take no effect.
+					
+		Note: If using this example to print with UART1, pls add conversion type (LPC_UART_TypeDef *)LPC_UART1
+		because UART1 has different structure type
+		Ex: UART_Send((LPC_UART_TypeDef *)LPC_UART1, menu1, sizeof(menu1), BLOCKING);
+		
+@Directory contents:
+	\EWARM: includes EWARM (IAR) project and configuration files
+	\Keil:	includes RVMDK (Keil)project and configuration files 
+	
+	lpc17xx_libcfg.h: Library configuration file - include needed driver library for this example 
+	makefile: Example's makefile (to build with GNU toolchain)
+	uart_irda_transmit.c: Main program
+
+@How to run:
+	Hardware configuration:		
+		This example was tested on:
+			Keil MCB1700 with LPC1768 vers.1
+				These jumpers must be configured as following:
+				- VDDIO: ON
+				- VDDREGS: ON 
+				- VBUS: ON
+				- AD0.2: OFF
+				- Remain jumpers: OFF
+				
+			Add in hardware: (1 infrared transmit led, 1 C1815 transistor, 1 33R, 1 150R)
+					- An infrared transmit led with its anode connected to 3.3V, cathode connected
+					to 33R resistor. The other end of this resistor connects to C1815 collector. C1815's emmitor connects to GND.
+					- Use a wire to connect P0.25, AD0.2 jumper, with 150R resistor, the other end of this resistor connectd to C1815 base.
+				
+				
+	Running mode:
+		This example can run on RAM/ROM mode.
+					
+		Note: If want to burn hex file to board by using Flash Magic, these jumpers need
+		to be connected:
+			- MCB1700 with LPC1768 ver.1:
+				+ RST: ON
+				+ ISP: ON
+			- IAR LPC1768 KickStart vers.A:
+				+ RST_E: ON
+				+ ISP_E: ON
+		
+		(Please reference "LPC1000 Software Development Toolchain" - chapter 4 "Creating and working with
+		LPC1000CMSIS project" for more information)
+	
+	Step to run:
+		- Step 1: Build example.
+		- Step 2: Burn hex file into board (if run on ROM mode)
+				  Also burn the receive example hex file to other board.
+		- Step 3: Connect UART0 on this board to COM port on your computer
+		- Step 4: Configure hardware and serial display as above instruction 
+		- Step 5: Run both examples.
+				  Point the transmit infrared led to the receive infrared led.
+				  From PC's terminal application, type 2 hex digits to form a byte to transmit.
+				  Observe the 8 leds bank of the receive board to compare with the transmit value.
+		
+		(Pls see "LPC17xx Example Description" document - chapter "Examples > UART > IrDA - Transmit"
+		for more details)
+		
+@Tip:
+	- Open \EWARM\*.eww project file to run example on IAR
+	- Open \RVMDK\*.uvproj project file to run example on Keil
