@@ -39,7 +39,7 @@ include $(PROJ_ROOT)/makesection/makerule/$(DEVICE)/make.$(DEVICE).$(TOOL)
 # Pick up the assembler and C source files in the directory  
 #
 ########################################################################
-include $(PROJ_ROOT)\makesection\makerule\common\make.rules.ftypes
+include $(PROJ_ROOT)/makesection/makerule/common/make.rules.ftypes
 AFLAGS +=-I../include 
 CFLAGS +=-I../include 
 
@@ -60,6 +60,7 @@ $(FWLIB_LIB_DIR):
 # delete all targets this Makefile can make
 lib_clean:
 	-@$(RM) $(TARGET_FWLIB_LIB)
+	@$(RM) *.o
 
 # delete all targets this Makefile can make and all built libraries
 # linked in
