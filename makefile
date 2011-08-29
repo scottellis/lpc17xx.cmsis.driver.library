@@ -42,7 +42,7 @@ TARGETS_CLN	=fwlib_clean
 #
 ########################################################################
 
-include $(PROJ_ROOT)\makesection\makerule\$(DEVICE)\make.$(DEVICE).$(TOOL)
+include $(PROJ_ROOT)/makesection/makerule/$(DEVICE)/make.$(DEVICE).$(TOOL)
 
 ########################################################################
 #
