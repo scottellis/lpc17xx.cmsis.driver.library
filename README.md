@@ -18,7 +18,7 @@ a destination of $(HOME)/x-tools and you added this to your PATH
 
 	${HOME}/x-tools/arm-bare_newlib_cortex_m3_nommu-eabi/bin
 
-then you should be able to use build the library from this repo as follows
+then you should be able to build the library from this repo as follows
 
 	$ cd ${HOME}/cortex-m3
 	$ git clone git@github.com/scottellis/lpc17xx.cmsis.driver.library.git
