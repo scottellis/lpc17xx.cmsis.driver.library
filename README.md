@@ -22,6 +22,6 @@ then you should be able to use build the library from this repo as follows
 
 	$ cd ${HOME}/cortex-m3
 	$ git clone git@github.com/scottellis/lpc17xx.cmsis.driver.library.git
-	$ cd lpc17xx.cmsis.driver.library.git
+	$ cd lpc17xx.cmsis.driver.library
 	$ make
  
